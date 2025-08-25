@@ -16,7 +16,6 @@ nano terraform.tfvars
 ```
 
 **IMPORTANT**: Update these in terraform.tfvars:
-- `key_pair_name`: Your AWS key pair name
 - `db_password`: A secure password
 - `aws_region`: Your preferred region
 

@@ -2,7 +2,7 @@
 resource "aws_instance" "frontend" {
   ami                    = data.aws_ami.amazon_linux.id
   instance_type          = var.instance_type
-  key_name               = var.key_pair_name
+  key_name               = aws_key_pair.main.key_name
   vpc_security_group_ids = [aws_security_group.frontend.id]
   subnet_id              = aws_subnet.public.id
 
@@ -24,7 +24,7 @@ resource "aws_instance" "frontend" {
 resource "aws_instance" "backend" {
   ami                    = data.aws_ami.amazon_linux.id
   instance_type          = var.instance_type
-  key_name               = var.key_pair_name
+  key_name               = aws_key_pair.main.key_name
   vpc_security_group_ids = [aws_security_group.backend.id]
   subnet_id              = aws_subnet.private.id
 

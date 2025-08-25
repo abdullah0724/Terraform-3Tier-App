@@ -43,12 +43,6 @@ variable "instance_type" {
   default     = "t3.micro"
 }
 
-variable "key_pair_name" {
-  description = "Name of the AWS key pair for EC2 instances"
-  type        = string
-  default     = "my-app-key"
-}
-
 # RDS Configuration
 variable "db_instance_class" {
   description = "RDS instance class"

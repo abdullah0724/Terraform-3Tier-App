@@ -15,9 +15,6 @@ Before starting, ensure you have:
 - [ ] Terraform installed (version >= 1.0)
 - [ ] Git installed (if cloning from repository)
 
-### 3. AWS Key Pair
-- [ ] EC2 Key Pair created in your target AWS region
-
 ## Step-by-Step Deployment
 
 ### Step 1: Verify AWS Configuration
@@ -47,19 +44,7 @@ sudo apt update && sudo apt install terraform
 **On Windows:**
 Download from: https://www.terraform.io/downloads
 
-### Step 3: Create AWS Key Pair
-
-1. Go to AWS Console → EC2 → Key Pairs
-2. Click "Create key pair"
-3. Name it (e.g., "my-app-key")
-4. Choose .pem format
-5. Download and save the .pem file securely
-6. Set proper permissions:
-   ```bash
-   chmod 400 my-app-key.pem
-   ```
-
-### Step 4: Configure Your Variables
+### Step 3: Configure Your Variables
 
 Edit the `terraform.tfvars` file:
 
@@ -71,11 +56,10 @@ vim terraform.tfvars
 ```
 
 **IMPORTANT**: Update these values:
-- `key_pair_name`: Your actual key pair name from Step 3
 - `db_password`: A strong, secure password
 - `aws_region`: Your preferred AWS region
 
-### Step 5: Initialize Terraform
+### Step 4: Initialize Terraform
 
 ```bash
 # Initialize Terraform (downloads required providers)
@@ -91,7 +75,7 @@ Initializing provider plugins...
 Terraform has been successfully initialized!
 ```
 
-### Step 6: Validate Configuration
+### Step 5: Validate Configuration
 
 ```bash
 # Check for syntax errors
@@ -103,7 +87,7 @@ Expected output:
 Success! The configuration is valid.
 ```
 
-### Step 7: Plan the Deployment
+### Step 6: Plan the Deployment
 
 ```bash
 # See what resources will be created
@@ -121,7 +105,7 @@ Review the output carefully. You should see:
 - 1 RDS Instance
 - Various supporting resources
 
-### Step 8: Deploy the Infrastructure
+### Step 7: Deploy the Infrastructure
 
 ```bash
 # Apply the configuration
@@ -132,7 +116,7 @@ When prompted, type `yes` to confirm.
 
 **Deployment time**: Approximately 10-15 minutes (RDS takes the longest)
 
-### Step 9: Verify Deployment
+### Step 8: Verify Deployment
 
 After successful deployment, Terraform will output important information:
 
@@ -144,10 +128,11 @@ terraform output
 You should see:
 - Frontend public IP
 - Application URL
+- Generated private key file path
 - SSH commands
 - Database endpoint
 
-### Step 10: Test Your Application
+### Step 9: Test Your Application
 
 1. **Access the Frontend**:
    ```bash
@@ -169,11 +154,12 @@ You should see:
    curl http://YOUR_FRONTEND_IP/db-test.php
    ```
 
-### Step 11: SSH Access (Optional)
+### Step 10: SSH Access (Optional)
 
 **Connect to Frontend**:
 ```bash
-ssh -i your-key-pair.pem ec2-user@YOUR_FRONTEND_IP
+# Use the SSH command from terraform output
+terraform output ssh_command_frontend
 ```
 
 **Connect to Backend (via Frontend)**:
@@ -186,7 +172,7 @@ terraform output ssh_command_backend
 
 ### Issue 1: Key Pair Not Found
 **Error**: `InvalidKeyPair.NotFound`
-**Solution**: Ensure the key pair exists in your specified AWS region
+**Solution**: This shouldn't happen as the key pair is auto-generated. If it does, run `terraform destroy` and `terraform apply` again.
 
 ### Issue 2: Insufficient Permissions
 **Error**: `UnauthorizedOperation`

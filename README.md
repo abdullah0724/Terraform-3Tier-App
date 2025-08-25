@@ -60,8 +60,7 @@ Before deploying this infrastructure, ensure you have:
 
 1. **AWS CLI configured** with appropriate credentials
 2. **Terraform installed** (version >= 1.0)
-3. **AWS Key Pair** created in your target region
-4. **Appropriate AWS permissions** for creating VPC, EC2, RDS resources
+3. **Appropriate AWS permissions** for creating VPC, EC2, RDS resources
 
 ## Deployment Instructions
 
@@ -74,7 +73,6 @@ cd terraform-3tier-app
 
 # Update terraform.tfvars with your specific values
 # IMPORTANT: Change the following in terraform.tfvars:
-# - key_pair_name: Your existing AWS key pair name
 # - db_password: A secure password for your database
 # - aws_region: Your preferred AWS region
 ```

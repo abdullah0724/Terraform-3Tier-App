@@ -6,6 +6,10 @@
 .terraform.lock.hcl
 crash.log
 crash.*.log
+# Generated key pair files
+*.pem
+*.key
+
 
 # OS files
 .DS_Store

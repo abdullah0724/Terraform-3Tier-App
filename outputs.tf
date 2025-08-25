@@ -80,12 +80,22 @@ output "database_security_group_id" {
 }
 
 # Connection Information
+output "private_key_file" {
+  description = "Path to the generated private key file"
+  value       = local_file.private_key.filename
+}
+
+output "key_pair_name" {
+  description = "Name of the created key pair"
+  value       = aws_key_pair.main.key_name
+}
+
 output "ssh_command_frontend" {
   description = "SSH command to connect to the frontend instance"
-  value       = "ssh -i ${var.key_pair_name}.pem ec2-user@${aws_instance.frontend.public_ip}"
+  value       = "ssh -i ${local_file.private_key.filename} ec2-user@${aws_instance.frontend.public_ip}"
 }
 
 output "ssh_command_backend" {
   description = "SSH command to connect to the backend instance (via frontend)"
-  value       = "ssh -i ${var.key_pair_name}.pem -o ProxyCommand='ssh -i ${var.key_pair_name}.pem -W %h:%p ec2-user@${aws_instance.frontend.public_ip}' ec2-user@${aws_instance.backend.private_ip}"
+  value       = "ssh -i ${local_file.private_key.filename} -o ProxyCommand='ssh -i ${local_file.private_key.filename} -W %h:%p ec2-user@${aws_instance.frontend.public_ip}' ec2-user@${aws_instance.backend.private_ip}"
 }
